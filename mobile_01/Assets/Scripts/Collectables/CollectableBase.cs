@@ -6,15 +6,15 @@ public class CollectableBase : MonoBehaviour
 {
 
     public string compareTag = "Player";
-    public ParticleSystem collectParticleSystem;
+    //public ParticleSystem collectParticleSystem;
     public GameObject graphicItem;
 
-    [Header("Sounds")]
-    public AudioSource audioSource;
+    //[Header("Sounds")]
+    //public AudioSource audioSource;
 
     private void Awake()
     {
-        if (collectParticleSystem != null)
+        /*if (collectParticleSystem != null)
         {
             collectParticleSystem.transform.SetParent(null);
         }
@@ -22,7 +22,7 @@ public class CollectableBase : MonoBehaviour
         if (audioSource != null)
         {
             audioSource.transform.SetParent(null);
-        }
+        }*/
     }
 
     private void OnTriggerEnter(Collider collision)
@@ -42,8 +42,8 @@ public class CollectableBase : MonoBehaviour
 
     protected virtual void OnCollect()
     {
-        collectParticleSystem.Play();
-        if (audioSource != null) audioSource.Play();
+        //collectParticleSystem.Play();
+        //if (audioSource != null) audioSource.Play();
     }
 }
 

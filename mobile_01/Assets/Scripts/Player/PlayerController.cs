@@ -19,6 +19,8 @@ public class PlayerController : Singleton<PlayerController>
     public GameObject startScreen;    
     public GameObject endScreen;
 
+    public bool invincible = false;
+
     //private variables
     private bool _canRun;
     private Vector3 _pos;
@@ -48,7 +50,7 @@ public class PlayerController : Singleton<PlayerController>
     {
         if(collision.transform.tag == tagToCheckEnemy)
         {
-            EndGame();
+            if(!invincible) EndGame();
         }
     }
 
@@ -56,8 +58,9 @@ public class PlayerController : Singleton<PlayerController>
     {
         if(other.transform.tag == tagToCheckEndLine)
         {
-            EndGame();
+            if(!invincible) EndGame();
         }
+
     }
 
     public void StartToRun()
@@ -86,6 +89,11 @@ public class PlayerController : Singleton<PlayerController>
     public void ResetSpeed()
     {
         _currentSpeed = speed;
+    }
+
+    public void SetInvincible(bool b = true)
+    {
+        invincible = b;
     }
     #endregion
 

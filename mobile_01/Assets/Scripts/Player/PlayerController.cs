@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Personal.Core.Singleton;
+using TMPro;
+using DG.Tweening;
 
 
 public class PlayerController : Singleton<PlayerController>
@@ -21,11 +23,16 @@ public class PlayerController : Singleton<PlayerController>
 
     public bool invincible = false;
 
+    [Header("UI Text")]
+    public TextMeshPro uiTextPowerUp;
+
+
     //private variables
     private bool _canRun;
     private Vector3 _pos;
     private float _currentSpeed;
     private Vector3 _startPosition;
+
 
     private void Start() 
     { 
@@ -78,7 +85,7 @@ public class PlayerController : Singleton<PlayerController>
     #region POWER UP
     public void SetPowerUpText(string s)
     {
-        //uiTextPowerUp.text = s;
+        uiTextPowerUp.text = s;
     }
 
     public void PowerUpSpeedUp(float f)
@@ -95,6 +102,36 @@ public class PlayerController : Singleton<PlayerController>
     {
         invincible = b;
     }
+
+    public void ChangeHeight(float amount, float duration, float animationDuration, Ease ease)
+    {
+        /*var p = transform.position;
+        p.y = _startPosition.y + amount;
+        transform.position = p;*/
+
+        transform.DOMoveY(_startPosition.y + amount, animationDuration).SetEase(ease);
+        Invoke(nameof(ResetHeight), duration);
+    }
+
+    //FORMA ALTERNATIVA DE AJUSTAR A ANIMAÇÃO
+    //public void ResetHeight(float animationDuration)
+    //{
+        //var p = transform.position;
+        //p.y = _startPosition.y;
+        //transform.position = p;
+
+        //transform.DOMoveY(_startPosition.y, animationDuration);
+    //}
+
+    public void ResetHeight()
+    {
+        /*var p = transform.position;
+        p.y = _startPosition.y;
+        transform.position = p;*/
+
+        transform.DOMoveY(_startPosition.y, .1f);
+    }
+
     #endregion
 
 

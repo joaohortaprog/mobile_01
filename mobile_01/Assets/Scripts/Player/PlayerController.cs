@@ -26,6 +26,9 @@ public class PlayerController : Singleton<PlayerController>
     [Header("UI Text")]
     public TextMeshPro uiTextPowerUp;
 
+    [Header("Coin Setup")]
+    public GameObject coinCollector;
+
 
     //private variables
     private bool _canRun;
@@ -130,6 +133,11 @@ public class PlayerController : Singleton<PlayerController>
         transform.position = p;*/
 
         transform.DOMoveY(_startPosition.y, .1f);
+    }
+
+    public void ChangeCoinCollectorSize(float amount)
+    {
+        coinCollector.transform.localScale = Vector3.one * amount;
     }
 
     #endregion

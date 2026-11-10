@@ -29,12 +29,15 @@ public class PlayerController : Singleton<PlayerController>
     [Header("Coin Setup")]
     public GameObject coinCollector;
 
+    [Header("Animation")]
+    public AnimatorManager animatorManager;
 
     //private variables
     private bool _canRun;
     private Vector3 _pos;
     private float _currentSpeed;
     private Vector3 _startPosition;
+    private float _baseSpeedToAnimation = 5f;
 
 
     private void Start() 
@@ -60,9 +63,36 @@ public class PlayerController : Singleton<PlayerController>
     {
         if(collision.transform.tag == tagToCheckEnemy)
         {
-            if(!invincible) EndGame();
+            if (!invincible)
+            {
+                MoveBack();
+                EndGame(AnimatorManager.AnimationType.DEATH);
+            }
         }
     }
+
+    private void MoveBack()
+    {
+        transform.DOMoveZ(-1f, .3f).SetRelative();
+    }
+
+    //ALTERNATIVA PARA EMPURRAR O OBSTÁCULO PRA FRENTE
+    /*private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.transform.tag == tagToCheckEnemy)
+        {
+            if (!invincible)
+            {
+                MoveBack(collision.transform);
+                EndGame(AnimatorManager.AnimationType.DEATH);
+            }
+        }
+    }
+
+    private void MoveBack(Transform t)
+    {
+        t.DOMoveZ(1f, .3f).SetRelative();
+    }*/
 
     private void OnTriggerEnter(Collider other)
     {
@@ -76,12 +106,14 @@ public class PlayerController : Singleton<PlayerController>
     public void StartToRun()
     {
         _canRun = true;
+        animatorManager.Play(AnimatorManager.AnimationType.RUN, _currentSpeed / _baseSpeedToAnimation);
         startScreen.SetActive(false);
     }
 
-    private void EndGame()
+    private void EndGame(AnimatorManager.AnimationType animationType = AnimatorManager.AnimationType.IDLE)
     {
         _canRun = false;
+        animatorManager.Play(animationType);
         endScreen.SetActive(true);
     }
 

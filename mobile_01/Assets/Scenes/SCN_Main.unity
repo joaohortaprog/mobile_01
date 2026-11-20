@@ -471,6 +471,59 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5156129202013452133, guid: 89e20167823a30d459856414377997d1, type: 3}
   m_PrefabInstance: {fileID: 539481384}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &583167471
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 583167473}
+  - component: {fileID: 583167472}
+  m_Layer: 0
+  m_Name: LevelManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &583167472
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 583167471}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 833f00a5f9519ea42a2b43bef4502e49, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  container: {fileID: 1027640320}
+  levels:
+  - {fileID: 6946988554989946519, guid: ef85634e19cf63f43b6ab2c03ac9caa7, type: 3}
+  - {fileID: 6946988554989946519, guid: 666cc4876899dda4a907e48a5027046b, type: 3}
+  levelSections:
+  - {fileID: 7615744857831970138, guid: d3715e1b2a8014447baa33c0132d3210, type: 3}
+  - {fileID: 6100795199617227479, guid: 108e3ef94c5575945a5c6fc27588124d, type: 3}
+  numberOfSections: 5
+  _index: 0
+  _spawnedSections: []
+--- !u!4 &583167473
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 583167471}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 13.294417, y: -3.7153673, z: 2.5346887}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &597346294
 GameObject:
   m_ObjectHideFlags: 0
@@ -1827,6 +1880,10 @@ PrefabInstance:
     - target: {fileID: 6946988554989946519, guid: ef85634e19cf63f43b6ab2c03ac9caa7, type: 3}
       propertyPath: m_Name
       value: Level 01
+      objectReference: {fileID: 0}
+    - target: {fileID: 6946988554989946519, guid: ef85634e19cf63f43b6ab2c03ac9caa7, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ef85634e19cf63f43b6ab2c03ac9caa7, type: 3}

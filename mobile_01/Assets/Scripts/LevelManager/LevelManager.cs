@@ -9,8 +9,16 @@ public class LevelManager : MonoBehaviour
     public List<GameObject> levels;
 
     [Header("Sections")]
+    public List<LevelSectionBase> levelSectionsStart;
     public List<LevelSectionBase> levelSections;
+    public List<LevelSectionBase> levelSectionsFinish;
+
+
+    public int numberOfStartSections = 1;
     public int numberOfSections = 5;
+    public int numberOfFinishSections = 1;
+
+    public float timeBetweenSections = .3f;
 
 
     [SerializeField] private int _index;
@@ -51,14 +59,31 @@ public class LevelManager : MonoBehaviour
     {
         _spawnedSections = new List<LevelSectionBase>();
 
-        for(int i = 0; i < numberOfSections; i++)
+        //FORMA ALTERNATIVA PARA GERAÇÃO USANDO CO-ROUTINE
+        /*for (int i = 0; i < numberOfSections; i++)
         {
-            CreateLevelSection();
+            CreateLevelSection(CreateLevelSectionCoroutine());
+            //yield return new WaitForSeconds(timeBetweenSections);
+        }*/
+
+        for (int i = 0; i < numberOfStartSections; i++)
+        {
+            CreateLevelSection(levelSectionsStart);
+        }
+
+        for (int i = 0; i < numberOfSections; i++)
+        {
+            CreateLevelSection(levelSections);
+        }
+        
+        for (int i = 0; i < numberOfFinishSections; i++)
+        {
+            CreateLevelSection(levelSectionsFinish);
         }
     }
-    private void CreateLevelSection()
+    private void CreateLevelSection(List<LevelSectionBase> list)
     {
-        var section = levelSections[Random.Range(0, levelSections.Count)];
+        var section = list[Random.Range(0, list.Count)];
         var spawnedSection = Instantiate(section, container);
 
         if (_spawnedSections.Count > 0)
@@ -70,6 +95,19 @@ public class LevelManager : MonoBehaviour
 
         _spawnedSections.Add(spawnedSection);
     }
+
+    //FORMA ALTERNATIVA PARA GERAÇÃO USANDO CO-ROUTINE
+    /*IEnumerator CreateLevelSectionCoroutine()
+    {
+        _spawnedSections = new List<LevelSectionBase>();
+
+        for (int i = 0; i < numberOfSections; i++)
+        {
+            CreateLevelSection(levelSections);
+            yield return new WaitForSeconds(timeBetweenSections);
+        }
+    }*/
+
     #endregion
 
     private void Update()

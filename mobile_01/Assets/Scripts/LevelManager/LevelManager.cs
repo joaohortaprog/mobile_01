@@ -6,7 +6,8 @@ public class LevelManager : MonoBehaviour
 {
     public Transform container;
 
-    public List<GameObject> levels;
+    [Header("Levels")]
+    public List<SOLevelSetup> levels;
 
     [Header("Sections")]
     public List<LevelSectionBase> levelSectionsStart;
@@ -14,16 +15,14 @@ public class LevelManager : MonoBehaviour
     public List<LevelSectionBase> levelSectionsFinish;
 
 
-    public int numberOfStartSections = 1;
-    public int numberOfSections = 5;
-    public int numberOfFinishSections = 1;
-
-    public float timeBetweenSections = .3f;
+    //public float timeBetweenSections = .3f;
 
 
     [SerializeField] private int _index;
-    private GameObject _currentLevel;
-    public List<LevelSectionBase> _spawnedSections;
+    [SerializeField] private SOLevelSetup _currentLevel;
+
+    [SerializeField] private List<LevelSectionBase> _spawnedSections = new List<LevelSectionBase>();
+
 
     private void Awake()
     {
@@ -31,22 +30,22 @@ public class LevelManager : MonoBehaviour
         CreateLevelSections();
     }
 
-    private void SpawnNextLevel()
+    private void NextLevel()
     {
-        if(_currentLevel != null)
+        if (levels == null || levels.Count == 0)
         {
-            Destroy(_currentLevel);
-            _index++;
-
-            if(_index >= levels.Count)
-            {
-                ResetLevelIndex();
-            }
-
+            Debug.LogWarning("Nenhum nivel configurado!");
+            return;
         }
 
-        _currentLevel = Instantiate(levels[_index], container);
-        _currentLevel.transform.localPosition = Vector3.zero;
+        _index++;
+
+        if (_index >= levels.Count)
+        {
+            ResetLevelIndex();
+        }
+
+        CreateLevelSections();
     }
 
     private void ResetLevelIndex()
@@ -55,34 +54,45 @@ public class LevelManager : MonoBehaviour
     }
 
     #region Levels
+
     private void CreateLevelSections()
     {
-        _spawnedSections = new List<LevelSectionBase>();
-
-        //FORMA ALTERNATIVA PARA GERAÇÃO USANDO CO-ROUTINE
-        /*for (int i = 0; i < numberOfSections; i++)
+        if (levels == null || levels.Count == 0)
         {
-            CreateLevelSection(CreateLevelSectionCoroutine());
-            //yield return new WaitForSeconds(timeBetweenSections);
-        }*/
+            Debug.LogWarning("Nenhum nivel configurado!");
+            return;
+        }
 
-        for (int i = 0; i < numberOfStartSections; i++)
+        CleanSpawnedSections();
+
+        _currentLevel = levels[_index];
+
+        for (int i = 0; i < _currentLevel.numberOfStartSections; i++)
         {
             CreateLevelSection(levelSectionsStart);
         }
 
-        for (int i = 0; i < numberOfSections; i++)
+        for (int i = 0; i < _currentLevel.numberOfSections; i++)
         {
             CreateLevelSection(levelSections);
         }
-        
-        for (int i = 0; i < numberOfFinishSections; i++)
+
+        for (int i = 0; i < _currentLevel.numberOfFinishSections; i++)
         {
             CreateLevelSection(levelSectionsFinish);
         }
+
+        ColorManager.Instance.ChangeColorByType(_currentLevel.artType);
     }
+
     private void CreateLevelSection(List<LevelSectionBase> list)
     {
+        if (list == null || list.Count == 0)
+        {
+            Debug.LogWarning("Lista de secoes vazia!");
+            return;
+        }
+
         var section = list[Random.Range(0, list.Count)];
         var spawnedSection = Instantiate(section, container);
 
@@ -93,7 +103,31 @@ public class LevelManager : MonoBehaviour
             spawnedSection.transform.position = lastSection.sectionFinish.position;
         }
 
+        var artSetup = ArtManager.Instance.GetSetupByType(_currentLevel.artType);
+
+        if (artSetup != null && artSetup.gameObject != null)
+        {
+            foreach (var p in spawnedSection.GetComponentsInChildren<ArtPiece>())
+            {
+                p.ChangePiece(artSetup.gameObject);
+            }
+        }
+        else
+        {
+            Debug.LogWarning("Configuracao de arte nao encontrada!");
+        }
+
         _spawnedSections.Add(spawnedSection);
+    }
+
+    private void CleanSpawnedSections()
+    {
+        for(int i = _spawnedSections.Count -1; i >= 0; i--)
+        {
+            Destroy(_spawnedSections[i].gameObject);
+        }
+
+        _spawnedSections.Clear();
     }
 
     //FORMA ALTERNATIVA PARA GERAÇÃO USANDO CO-ROUTINE
@@ -112,9 +146,14 @@ public class LevelManager : MonoBehaviour
 
     private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.D))
+        if (Input.GetKeyDown(KeyCode.D))
         {
-            SpawnNextLevel();
+            CreateLevelSections();
+        }
+
+        if (Input.GetKeyDown(KeyCode.N))
+        {
+            NextLevel();
         }
     }
 }

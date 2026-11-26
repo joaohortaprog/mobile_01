@@ -502,11 +502,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   artSetups:
   - artType: 0
-    gameObject: {fileID: 6509522539734910298, guid: 781a4bde628bf7f48887cd22d144754a, type: 3}
+    gameObject: {fileID: 348501516762923855, guid: 781a4bde628bf7f48887cd22d144754a, type: 3}
   - artType: 1
-    gameObject: {fileID: 5089331800233611233, guid: 71a571d28af50b94998cdcace576451a, type: 3}
+    gameObject: {fileID: 5895288186493897473, guid: 71a571d28af50b94998cdcace576451a, type: 3}
   - artType: 2
-    gameObject: {fileID: 4916478205113327928, guid: 6cf9b78f3c269e8489e9c469c96170d5, type: 3}
+    gameObject: {fileID: 2867134348149897675, guid: 6cf9b78f3c269e8489e9c469c96170d5, type: 3}
 --- !u!4 &579042502
 Transform:
   m_ObjectHideFlags: 0
@@ -554,6 +554,7 @@ MonoBehaviour:
   levels:
   - {fileID: 11400000, guid: a3e95d6db3e31de4395c9f447a3b66fd, type: 2}
   - {fileID: 11400000, guid: b30dbdd831689174996b53bb9cdb687d, type: 2}
+  - {fileID: 11400000, guid: e9f5c3cda7f5a9944ad7ed667148a50c, type: 2}
   levelSectionsStart:
   - {fileID: 7615744857831970138, guid: 131ef267d26a78f46840be489918859e, type: 3}
   levelSections:
@@ -1014,11 +1015,11 @@ MonoBehaviour:
   - artType: 1
     colors:
     - {r: 0, g: 0.039965153, b: 1, a: 0}
-    - {r: 1, g: 0, b: 0.71225405, a: 0}
+    - {r: 0, g: 1, b: 0.23863244, a: 0}
   - artType: 2
     colors:
     - {r: 0, g: 1, b: 0.99119043, a: 0}
-    - {r: 1, g: 0.89839494, b: 0, a: 0}
+    - {r: 0.8741627, g: 0, b: 1, a: 0}
 --- !u!4 &955790074
 Transform:
   m_ObjectHideFlags: 0

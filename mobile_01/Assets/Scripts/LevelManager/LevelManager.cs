@@ -24,7 +24,7 @@ public class LevelManager : MonoBehaviour
     [SerializeField] private List<LevelSectionBase> _spawnedSections = new List<LevelSectionBase>();
 
 
-    private void Awake()
+    private void Start()
     {
         //SpawnNextLevel();
         CreateLevelSections();
